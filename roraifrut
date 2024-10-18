@@ -1,0 +1,59 @@
+import React, { useState } from 'react';
+import { ChevronRight, ChevronLeft } from 'lucide-react';
+
+const menuItems = [
+  { category: "Novas Opções de Açaí", items: [
+    { name: "Açaí Amazônia", description: "Açaí + castanha-do-pará + granola de cupuaçu + mel silvestre", price: "R$ 18,00" },
+    { name: "Açaí Fit", description: "Açaí sem adição de açúcar + whey protein + banana + amendoim", price: "R$ 20,00" },
+    { name: "Açaí Tropical", description: "Açaí + manga + coco ralado + granola", price: "R$ 17,00" }
+  ]},
+  { category: "Opções Típicas do Pará", items: [
+    { name: "Tigela Paraense", description: "Açaí + farinha de tapioca + camarão seco + jambu", price: "R$ 25,00" },
+    { name: "Açaí com Peixe Frito", description: "Porção de peixe frito regional + farofa + açaí puro", price: "R$ 30,00" },
+    { name: "Vatapá no Açaí", description: "Açaí servido com uma porção de vatapá paraense", price: "R$ 28,00" }
+  ]},
+  { category: "Combos Regionais", items: [
+    { name: "Combo Belém", description: "Tigela média de açaí + mini porção de pato no tucupi", price: "R$ 35,00" },
+    { name: "Combo Marajó", description: "Açaí + queijo do Marajó + geleia de cupuaçu", price: "R$ 32,00" },
+    { name: "Combo Indígena", description: "Açaí puro + beiju + peixe moqueado", price: "R$ 33,00" }
+  ]},
+  { category: "Bebidas Especiais", items: [
+    { name: "Smoothie de Açaí e Cupuaçu", description: "Bebida cremosa de açaí e cupuaçu", price: "R$ 15,00" },
+    { name: "Limonada de Açaí", description: "Limonada rosa com açaí", price: "R$ 12,00" },
+    { name: "Açaí Latte", description: "Bebida quente de açaí com leite vaporizado", price: "R$ 14,00" }
+  ]}
+];
+
+const MenuPrototype = () => {
+  const [currentCategory, setCurrentCategory] = useState(0);
+
+  const nextCategory = () => {
+    setCurrentCategory((prev) => (prev + 1) % menuItems.length);
+  };
+
+  const prevCategory = () => {
+    setCurrentCategory((prev) => (prev - 1 + menuItems.length) % menuItems.length);
+  };
+
+  return (
+    <div className="max-w-md mx-auto bg-purple-100 p-4 rounded-lg shadow-lg">
+      <h1 className="text-2xl font-bold text-center text-purple-800 mb-4">RORAIFRUT Açaí</h1>
+      <div className="flex items-center justify-between mb-4">
+        <button onClick={prevCategory} className="bg-purple-500 text-white p-2 rounded-full"><ChevronLeft /></button>
+        <h2 className="text-xl font-semibold text-purple-700">{menuItems[currentCategory].category}</h2>
+        <button onClick={nextCategory} className="bg-purple-500 text-white p-2 rounded-full"><ChevronRight /></button>
+      </div>
+      <div className="space-y-4">
+        {menuItems[currentCategory].items.map((item, index) => (
+          <div key={index} className="bg-white p-3 rounded-md shadow">
+            <h3 className="font-semibold text-purple-600">{item.name}</h3>
+            <p className="text-sm text-gray-600">{item.description}</p>
+            <p className="text-right font-bold text-purple-500">{item.price}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+};
+
+export default MenuPrototype;
